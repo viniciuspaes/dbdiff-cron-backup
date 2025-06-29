@@ -35,14 +35,6 @@ It runs scheduled database dumps via `cron`, compares them to the previous backu
 
 ---
 
-## Example Cron Job
-
-```cron
-@daily /home/youruser/dbdiff-cron-backup/dbdiff-cron-backup.sh >/dev/null 2>&1
-```
-
----
-
 ## Recommended Folder Structure
 
 - `/mnt/external-hd/current`
