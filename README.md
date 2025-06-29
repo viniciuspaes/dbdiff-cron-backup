@@ -28,7 +28,11 @@ It runs scheduled database dumps via `cron`, compares them to the previous backu
    ```bash
    chmod +x backup-cron.sh
    ```
-6. Schedule it via `cron`. For example, to run once daily:
+6. Open crontab
+    ```bash
+   crontab -e
+   ```
+8. Schedule it via `cron`. For example, to run once daily. Add line to crontab:
    ```cron
    @daily /path/to/dbdiff-cron-backup.sh >/dev/null 2>&1
    ```
