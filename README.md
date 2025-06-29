@@ -30,7 +30,7 @@ It runs scheduled database dumps via `cron`, compares them to the previous backu
    ```
 6. Schedule it via `cron`. For example, to run once daily:
    ```cron
-   @daily /path/to/backup-cron.sh >/dev/null 2>&1
+   @daily /path/to/dbdiff-cron-backup.sh >/dev/null 2>&1
    ```
 
 ---
@@ -38,7 +38,7 @@ It runs scheduled database dumps via `cron`, compares them to the previous backu
 ## Example Cron Job
 
 ```cron
-@daily /home/youruser/dbdiff-cron-backup/backup-cron.sh >/dev/null 2>&1
+@daily /home/youruser/dbdiff-cron-backup/dbdiff-cron-backup.sh >/dev/null 2>&1
 ```
 
 ---
