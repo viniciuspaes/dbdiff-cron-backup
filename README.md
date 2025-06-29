@@ -26,7 +26,7 @@ It runs scheduled database dumps via `cron`, compares them to the previous backu
 4. Edit the last line (`chown`) to set the correct user and group ownership for the backup files.
 5. Make the script executable:
    ```bash
-   chmod +x backup-cron.sh
+   chmod +x dbdiff-cron-backup.sh
    ```
 6. Open crontab
     ```bash
