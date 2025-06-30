@@ -1,0 +1,39 @@
+  services:
+  backup:
+    build: .
+    container_name: db-backup
+    depends_on:
+      - db
+    volumes:
+      - ./backup:/backup
+    environment:
+      TIMESTAMP_FORMAT: "+%Y-%m-%d_%H-%M-%S"  # default
+      DB_TYPE: mysql  # or postgres
+      DB_PORT: 3306   # or 5432 for postgres
+      DB_USERS:     "user1,user2,user3"
+      DB_PASSWORDS: "pass1,pass2,pass3"
+      DB_DATABASES: "db1,db2,db3"
+      BACKUP_OWNER: viniciuspaes
+      BACKUP_GROUP: viniciuspaes
+    networks:
+      - internal
+
+
+  db:
+    image: mysql:8.0
+    container_name: mysql
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_DATABASE: mydb
+      MYSQL_USER: user1
+      MYSQL_PASSWORD: pass1
+    volumes:
+      - mysql-data:/var/lib/mysql
+
+networks:
+  internal:
+    driver: bridge
+
+volumes:
+  mysql-data:
