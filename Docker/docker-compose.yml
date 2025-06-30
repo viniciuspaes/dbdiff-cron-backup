@@ -13,8 +13,8 @@
       DB_USERS:     "user1,user2,user3"
       DB_PASSWORDS: "pass1,pass2,pass3"
       DB_DATABASES: "db1,db2,db3"
-      BACKUP_OWNER: viniciuspaes
-      BACKUP_GROUP: viniciuspaes
+      BACKUP_OWNER: youruser
+      BACKUP_GROUP: yourgroup
     networks:
       - internal
 
