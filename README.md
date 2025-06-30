@@ -61,6 +61,74 @@ This ensures correct ownership and permissions for all backup files.
 
 ---
 
+## 🐳 Running as a Docker Container
+
+This backup script can also be used inside a Docker container, making it easy to integrate with containerized databases such as MySQL or PostgreSQL.
+
+### ✅ Benefits of using the container version:
+
+- Runs on the same Docker network as your database container
+- Automatically handles backups on a schedule (e.g., daily)
+- Backup folders are mapped to the host for persistent storage
+- All configuration is done through environment variables — no need to edit the script
+
+---
+
+## Environment Variables
+
+| Variable         | Description                              | Example                        |
+|------------------|------------------------------------------|--------------------------------|
+| `DB_TYPE`         | Database type (`mysql` or `postgres`)   | `mysql`                        |
+| `DB_HOST`         | Hostname or service name of DB          | `db`                           |
+| `DB_PORT`         | Port of the DB server                   | `3306`                         |
+| `DB_USERS`        | Comma-separated list of users           | `user1,user2`                  |
+| `DB_PASSWORDS`    | Comma-separated list of passwords       | `pass1,pass2`                  |
+| `DB_DATABASES`    | Comma-separated list of databases       | `db1,db2`                      |
+| `TIMESTAMP_FORMAT`| Custom timestamp format for file names  | `+%Y-%m-%d_%H-%M-%S`           |
+| `BACKUP_OWNER`    | Backup file owner (for chown)           | `root`                         |
+| `BACKUP_GROUP`    | Backup file group (for chown)           | `root`                         |
+
+### 📦 Docker Compose Example
+
+```yaml
+services:
+  db:
+    image: mysql:8.0
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpass
+      MYSQL_DATABASE: db1
+      MYSQL_USER: user1
+      MYSQL_PASSWORD: pass1
+
+  db-backup:
+    build: .
+    depends_on:
+      - db
+    environment:
+      DB_TYPE: mysql
+      DB_HOST: db
+      DB_PORT: 3306
+      DB_USERS: user1
+      DB_PASSWORDS: pass1
+      DB_DATABASES: db1
+      TIMESTAMP_FORMAT: "+%Y-%m-%d_%H-%M-%S"
+      BACKUP_OWNER: root
+      BACKUP_GROUP: root
+    volumes:
+      - ./backup:/backup
+    networks:
+      - internal
+
+networks:
+  internal:
+    driver: bridge
+```
+
+The container will automatically run the backup script once every 24 hours.  
+All backups are saved to the `./backup` folder on the host machine.
+
+---
+
 ## License
 
 This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
